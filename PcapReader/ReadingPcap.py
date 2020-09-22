@@ -32,25 +32,25 @@ pck = packets[1]
 
 # type() method returns a each packet as an object
 # In below example it is returning object of type Ether
-print(type(pck))
+# print(type(pck))
 
 
 # if you want to know which functions you can use on this packet
 # use the dir() function
 print(dir(pck))
-
+# print(sizeof(pck))
 
 # to print the packet you can use str() function
-print(str(pck))
+# print(str(pck))
 # it have no sense...
 
 # for will printing:
 # hexdump() method can also be use for printing packets. it prints the information about source ,
 # destination , timestamp , channel etc.
-hexdump(pck)
+# hexdump(pck)
 
 
 # To print full/complete information of each packet
 # use show() function
-pck.show()
+pck.show2()
 
