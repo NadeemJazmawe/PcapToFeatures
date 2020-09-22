@@ -17,7 +17,7 @@ from scapy.all import *
 
 # First we need to read the pcap file
 # to read pcap file use rdpcap() function
-packets = rdpcap("HTTPS-0002.pcap")
+packets = rdpcap("../TheProject/DoH-0016.pcap")
 # packets is the name of our pcap file.
 
 
@@ -52,5 +52,8 @@ print(dir(pck))
 
 # To print full/complete information of each packet
 # use show() function
-pck.show2()
+# pck.show2()
 
+
+# To show the length of the packet we use the method of __len__() , like the following line:
+print("the size of the packet is:", pck.__len__())
