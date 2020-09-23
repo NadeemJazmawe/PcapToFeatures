@@ -28,7 +28,7 @@ def run(filename, pathdoh, pathttps):
             packets = rdpcap(pathdoh + "/" +pck)
             n = numpcap(packets)
             s = sizepcap(packets)
-            writeover(filename, 0, n, s, n / s)
+            writeover(filename, 0, n, s, s/n)
 
     filelist = os.listdir(pathttps)
     for pck in filelist:
@@ -36,7 +36,7 @@ def run(filename, pathdoh, pathttps):
             packets = rdpcap(pathttps + "/" + pck)
             n = numpcap(packets)
             s = sizepcap(packets)
-            writeover(filename, 1, n, s, n / s)
+            writeover(filename, 1, n, s, s/n)
 
 
 x = createcsv()
