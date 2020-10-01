@@ -1,20 +1,5 @@
 from scapy.all import *
 
-# # rdpcap comes from scapy and loads in our pcap file
-# from scapy.layers.dns import DNSRR
-#
-# packets = rdpcap('HTTPS-0002.pcap')
-# # str(packet)
-#
-# # Let's iterate through every packet
-# for packet in packets:
-#     print(packet)
-#     # We're only interested packets with a DNS Round Robin layer
-#     if packet.haslayer(DNSRR):
-#         # If the an(swer) is a DNSRR, print the name it replied with.
-#         if isinstance(packet.an, DNSRR):
-#             print(packet.an.rrname)
-
 # First we need to read the pcap file
 # to read pcap file use rdpcap() function
 packets = rdpcap("../TheProject/DoH-0016.pcap")
@@ -55,5 +40,12 @@ print(dir(pck))
 # pck.show2()
 
 
-# To show the length of the packet we use the method of __len__() , like the following line:
-print("the size of the packet is:", pck.__len__())
+# To show num of packet in pcap file we use the method of __len__() , like the following line:
+# print("the num of packets in pcap file is:", pck.__len__())
+# To show the size of some packet in this pcap file
+# print("size of the third packet", packets[1].__len__())
+# To show info of any packet
+print(pck.show())
+# we can also show only one info of the packet like this
+print(pck.src)
+print(pck.time)
