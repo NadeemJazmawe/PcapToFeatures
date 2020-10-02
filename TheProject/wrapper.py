@@ -11,15 +11,22 @@ def createcsv(name="DataSet"):
     filename = name + ".csv"
     with open(filename, "w", newline='') as file:
         writer = csv.writer(file)
-        writer.writerow(['type Pcap', 'client packets', 'dist packets', 'average time to packet', 'max packet time',
-                        'min packet time', 'average'])
+        writer.writerow(['Label', 'Duration', 'Average Time Delay', 'Min Time Delay',
+                        'Max Time Delay', 'Percentage Incoming Packets', 'Percentage Outgoing Packets',
+                         'Max Packet Size', 'Outgoing Packet Variance', 'Incoming Packet Variance',
+                         'Average Outgoing Packets', 'Average Incoming packets', 'Ratio Bytes Size'])
     return filename
 
 
-def writeover(filename, col1, col2, col3, col4, col5, col6, col7):
+def writeover(filename, type_pcap, duration, average_time_delay, min_time_delay, max_time_delay,
+              percentage_incoming_packets, percentage_outgoing_packets, max_packet_size, outgoing_packet_variance,
+              incoming_packet_variance, average_outgoing_packets, average_incoming_packets, ratio_bytes_size):
     with open(filename, "a", newline='') as file:
         writer = csv.writer(file)
-        writer.writerow([col1, col2, col3, col4, col5, col6, col7])
+        writer.writerow([type_pcap, duration, average_time_delay, min_time_delay, max_time_delay,
+                         percentage_incoming_packets, percentage_outgoing_packets, max_packet_size,
+                         outgoing_packet_variance, incoming_packet_variance, average_outgoing_packets,
+                         average_incoming_packets, ratio_bytes_size])
 
 
 def run(filename, type_pcap, path):
@@ -27,13 +34,18 @@ def run(filename, type_pcap, path):
     for pck in filelist:
         if pck.endswith(".pcap"):
             packets = rdpcap(path + "/" + pck)
-            if (packets.__len__() > 50):
-                packet_list = pcaptolist(packets)
-                time_packets = times(packet_list)
-                num_packets = numpacket(packet_list, packets[0].src)
-                max_packet_size = maxpacket(packet_list)
-                writeover(filename, type_pcap, num_packets[0], num_packets[1], time_packets[0], time_packets[1],
-                          time_packets[2], max_packet_size)
+            duration = durations(packets)
+            packet_list = pcaptolist(packets)
+            src = packets[0].src
+            time_packets = times(packet_list)
+            num_packets = numpacket(packet_list, src)
+            max_packet_size = maxpacket(packet_list)
+            variance_size = variance(packets, src)
+            average_size = average_way(packets, src)
+            ratio_bytes_size = ratio_bytes(packets, src)
+            writeover(filename, type_pcap, duration, time_packets[0], time_packets[1], time_packets[2],
+                      num_packets[0], num_packets[1], max_packet_size, variance_size[0], variance_size[1],
+                      average_size[0], average_size[1], ratio_bytes_size)
 
 
 x = createcsv()

@@ -1,4 +1,5 @@
 from scapy.all import *
+import numpy as np
 
 
 # This function accept pcap file and it return number of packets in it
@@ -16,7 +17,7 @@ def sizepcap(pck):
 
 # This function accept pcap file and calculate the average size of packets in it
 def average(pck):
-    return sizepcap(pck)/numpcap(pck)
+    return sizepcap(pck) / numpcap(pck)
 
 
 # This function accept list of packets
@@ -28,13 +29,16 @@ def maxpacket(pck):
             max = packet.__len__()
     return max
 
+
 # this function check where is first packet after the handshake
 # and the key Exchange , and return the number of it
 def startin(pck):
     return 15
 
+
 def endin(pck):
-    return pck.__len__()-3
+    return pck.__len__() - 3
+
 
 # this function convert the pcap file to list
 # every cell in this list will have one packet
@@ -43,13 +47,19 @@ def pcaptolist(pck):
     start = startin(pck)
     end = endin(pck)
     list = []
-    i = 0
-    for packet in pck:
-        if (i == 30) or (i == end):
+    for i in range(start, end):
+        if i == end:
             break
-        list.append(packet)
-        i += 1
+        list.append(pck[i])
     return list
+
+
+# This function accept pcap file
+# it calculate and return the time that this pcap file took
+def durations(pck):
+    start = pck[0].time
+    end = pck[-1].time
+    return end - start
 
 
 # this function accept list of packets
@@ -72,16 +82,67 @@ def times(pck):
             average += time
 
     average = int(average / 29)
-    return [average, max, min]
+    return [average, min, max]
 
+
+# This function accept list of packets and ip of the source
+# it calculate the percentage of incoming and outgoing packets
+# it return it in a list
 def numpacket(pck, source):
     num = 0
     for packet in pck:
         if packet.src == source:
             num += 1
-    num = num/len(pck)
-    return [num, 1-num]
+    if pck.__len__() == 0:
+        num = 0
+    else:
+        num = num / pck.__len__()
+    return [num, 1 - num]
 
 
+# This function accept list of packets and the source ip
+# and it calculate the variance of the incoming/outgoing packets
+def variance(pck, src):
+    list_incoming = []
+    list_outgoing = []
+    for packet in pck:
+        if packet.src == src:
+            list_outgoing.append(packet.__len__())
+        else:
+            list_incoming.append(packet.__len__())
+
+    outgoing_variance = np.var(list_outgoing)
+    incoming_variance = np.var(list_incoming)
+    return [outgoing_variance, incoming_variance]
 
 
+# This function accept pcap file and the source ip
+# it calculate the average of incoming/outgoing packets
+def average_way(pck, src):
+    list_incoming = []
+    list_outgoing = []
+    for packet in pck:
+        if packet.src == src:
+            list_outgoing.append(packet.__len__())
+        else:
+            list_incoming.append(packet.__len__())
+
+    outgoing_av_size = np.average(list_outgoing)
+    incoming_av_size = np.average(list_incoming)
+    return [outgoing_av_size, incoming_av_size]
+
+
+def ratio_bytes(pck, src):
+    list_incoming = []
+    list_outgoing = []
+    for packet in pck:
+        if packet.src == src:
+            list_outgoing.append(packet.__len__())
+        else:
+            list_incoming.append(packet.__len__())
+
+    outgoing_size = np.sum(list_outgoing)
+    incoming_size = np.sum(list_incoming)
+    if incoming_size == 0:
+        incoming_size = 1
+    return outgoing_size/incoming_size
