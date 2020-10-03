@@ -20,13 +20,13 @@ def createcsv(name="DataSet"):
 
 def writeover(filename, type_pcap, duration, average_time_delay, min_time_delay, max_time_delay,
               percentage_incoming_packets, percentage_outgoing_packets, max_packet_size, outgoing_packet_variance,
-              incoming_packet_variance, average_outgoing_packets, average_incoming_packets, ratio_bytes_size):
+              incoming_packet_variance, average_outgoing_packets, average_incoming_packets, ratio_bytes_size, ration_of_packets):
     with open(filename, "a", newline='') as file:
         writer = csv.writer(file)
         writer.writerow([type_pcap, duration, average_time_delay, min_time_delay, max_time_delay,
                          percentage_incoming_packets, percentage_outgoing_packets, max_packet_size,
                          outgoing_packet_variance, incoming_packet_variance, average_outgoing_packets,
-                         average_incoming_packets, ratio_bytes_size])
+                         average_incoming_packets, ratio_bytes_size, ration_of_packets])
 
 
 def run(filename, type_pcap, path):
@@ -43,9 +43,10 @@ def run(filename, type_pcap, path):
             variance_size = variance(packets, src)
             average_size = average_way(packets, src)
             ratio_bytes_size = ratio_bytes(packets, src)
+            ration_of_packets = ration_packets(packets, src)
             writeover(filename, type_pcap, duration, time_packets[0], time_packets[1], time_packets[2],
                       num_packets[0], num_packets[1], max_packet_size, variance_size[0], variance_size[1],
-                      average_size[0], average_size[1], ratio_bytes_size)
+                      average_size[0], average_size[1], ratio_bytes_size, ration_of_packets)
 
 
 x = createcsv()

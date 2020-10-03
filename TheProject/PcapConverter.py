@@ -36,6 +36,7 @@ def startin(pck):
     return 15
 
 
+
 def endin(pck):
     return pck.__len__() - 3
 
@@ -77,7 +78,7 @@ def times(pck):
             help = p.time
             if max < time:
                 max = time
-            elif min > time:
+            if min > time:
                 min = time
             average += time
 
@@ -132,6 +133,8 @@ def average_way(pck, src):
     return [outgoing_av_size, incoming_av_size]
 
 
+# This function accept pcap file and the source ip
+# it calculate the ratio bytes between the incoming and outgoing packets
 def ratio_bytes(pck, src):
     list_incoming = []
     list_outgoing = []
@@ -146,3 +149,19 @@ def ratio_bytes(pck, src):
     if incoming_size == 0:
         incoming_size = 1
     return outgoing_size/incoming_size
+
+
+# This function accept pcap file and the source ip
+# it calculate the ration number of the incoming and outgoing packets
+def ration_packets(pck, src):
+    list_incoming = []
+    list_outgoing = []
+    for packet in pck:
+        if packet.src == src:
+            list_outgoing.append(packet.__len__())
+        else:
+            list_incoming.append(packet.__len__())
+
+    if len(list_incoming):
+        return 1
+    return len(list_outgoing)/len(list_incoming)
