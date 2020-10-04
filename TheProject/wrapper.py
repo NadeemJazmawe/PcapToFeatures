@@ -34,19 +34,20 @@ def run(filename, type_pcap, path):
     for pck in filelist:
         if pck.endswith(".pcap"):
             packets = rdpcap(path + "/" + pck)
-            duration = durations(packets)
             packet_list = pcaptolist(packets)
-            src = packets[0].src
-            time_packets = times(packet_list)
-            num_packets = numpacket(packet_list, src)
-            max_packet_size = maxpacket(packet_list)
-            variance_size = variance(packets, src)
-            average_size = average_way(packets, src)
-            ratio_bytes_size = ratio_bytes(packets, src)
-            ration_of_packets = ration_packets(packets, src)
-            writeover(filename, type_pcap, duration, time_packets[0], time_packets[1], time_packets[2],
-                      num_packets[0], num_packets[1], max_packet_size, variance_size[0], variance_size[1],
-                      average_size[0], average_size[1], ratio_bytes_size, ration_of_packets)
+            if len(packet_list) > 0 :
+                duration = durations(packet_list)
+                src = packets[0].src
+                time_packets = times(packet_list)
+                num_packets = numpacket(packet_list, src)
+                max_packet_size = maxpacket(packet_list)
+                variance_size = variance(packets, src)
+                average_size = average_way(packets, src)
+                ratio_bytes_size = ratio_bytes(packets, src)
+                ration_of_packets = ration_packets(packets, src)
+                writeover(filename, type_pcap, duration, time_packets[0], time_packets[1], time_packets[2],
+                          num_packets[0], num_packets[1], max_packet_size, variance_size[0], variance_size[1],
+                          average_size[0], average_size[1], ratio_bytes_size, ration_of_packets)
 
 
 x = createcsv()

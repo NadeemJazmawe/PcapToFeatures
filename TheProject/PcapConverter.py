@@ -33,12 +33,12 @@ def maxpacket(pck):
 # this function check where is first packet after the handshake
 # and the key Exchange , and return the number of it
 def startin(pck):
-    return 15
+    return 13
 
 
 
 def endin(pck):
-    return pck.__len__() - 3
+    return pck.__len__() - 4
 
 
 # this function convert the pcap file to list
