@@ -47,7 +47,6 @@ def startin(path_doh_session):
                             packet.ip.src) == server_ip_src)):  # for the correct Encripted Handshake Message from the server.
                     pcap_file.close()
                     return index + 1
-    print(path_doh_session)
     return -1
 
 def endin(pck):
