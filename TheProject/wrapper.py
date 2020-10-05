@@ -1,5 +1,6 @@
 import csv
 import os
+import time
 
 from TheProject.PcapConverter import *
 
@@ -31,11 +32,17 @@ def writeover(filename, type_pcap, duration, average_time_delay, min_time_delay,
 
 def run(filename, type_pcap, path):
     filelist = os.listdir(path)
+    random.shuffle(filelist)
+    i = 0
     for pck in filelist:
+        if i == 25000:
+            break
         if pck.endswith(".pcap"):
             packets = rdpcap(path + "/" + pck)
-            packet_list = pcaptolist(packets)
-            if len(packet_list) > 0 :
+            start = startin(path + "/" + pck)
+            packet_list = pcaptolist(packets, start)
+            if len(packet_list) > 0:
+                i += 1
                 duration = durations(packet_list)
                 src = packets[0].src
                 time_packets = times(packet_list)
@@ -49,7 +56,11 @@ def run(filename, type_pcap, path):
                           num_packets[0], num_packets[1], max_packet_size, variance_size[0], variance_size[1],
                           average_size[0], average_size[1], ratio_bytes_size, ration_of_packets)
 
-
 x = createcsv()
 run(x, 0, PathDoH)
 run(x, 1, PathHTTPS)
+
+
+
+# 24,381    Doh
+# 761,542 HTTPS -> 25000

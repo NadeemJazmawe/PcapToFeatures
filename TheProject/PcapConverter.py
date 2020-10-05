@@ -1,6 +1,6 @@
 from scapy.all import *
 import numpy as np
-
+import pyshark
 
 # This function accept pcap file and it return number of packets in it
 def numpcap(pck):
@@ -32,10 +32,23 @@ def maxpacket(pck):
 
 # this function check where is first packet after the handshake
 # and the key Exchange , and return the number of it
-def startin(pck):
-    return 13
-
-
+def startin(path_doh_session):
+    pcap_file = pyshark.FileCapture(path_doh_session)
+    server_ip_src = str(pcap_file[0].ip.dst)
+    index = 0
+    for packet in pcap_file:
+        index += 1
+        for layer in packet.layers:
+            if layer._field_prefix == 'tls.':
+                st = str(layer)
+                if (("TLSv1.3 Record Layer: Change Cipher Spec Protocol: Change Cipher Spec" in st)
+                        or ("TLSv1.2 Record Layer: Change Cipher Spec Protocol: Change Cipher Spec" in st)
+                        and (str(
+                            packet.ip.src) == server_ip_src)):  # for the correct Encripted Handshake Message from the server.
+                    pcap_file.close()
+                    return index + 1
+    print(path_doh_session)
+    return -1
 
 def endin(pck):
     return pck.__len__() - 4
@@ -44,10 +57,11 @@ def endin(pck):
 # this function convert the pcap file to list
 # every cell in this list will have one packet
 # i have took only the first 30 packet after the key exchange(or less) to complete my research
-def pcaptolist(pck):
-    start = startin(pck)
+def pcaptolist(pck, start):
     end = endin(pck)
     list = []
+    if start == -1:
+        return list
     for i in range(start, end):
         if i == end:
             break
