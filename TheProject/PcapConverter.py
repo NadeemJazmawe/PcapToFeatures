@@ -66,7 +66,6 @@ def pcaptolist(pck, start, length=30):
         if i == end:
             break
         list.append(pck[i])
-    print(len(list))
     return list
 
 

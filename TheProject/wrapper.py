@@ -6,7 +6,8 @@ from TheProject.PcapConverter import *
 
 PathHTTPS = "/home/nadeem/Documents/recorded_traffic_test/HTTPS"
 PathDoH = "/home/nadeem/Documents/recorded_traffic_test/DoH"
-
+# PathHTTPS = "/media/cyberlab/D/Desktop/Nour-FP/traffic records/splitted HTTPS_"
+# PathDoH = "/media/cyberlab/D/Desktop/Nour-FP/traffic records/splitted DoH_"
 
 def createcsv(name="DataSet"):
     filename = name + ".csv"
