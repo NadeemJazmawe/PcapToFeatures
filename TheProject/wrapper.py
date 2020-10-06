@@ -37,10 +37,12 @@ def run(filename, type_pcap, path):
     for pck in filelist:
         if i == 25000:
             break
+        if (i % 100) == 0:
+            print(i, '/25000')
         if pck.endswith(".pcap"):
             packets = rdpcap(path + "/" + pck)
             start = startin(path + "/" + pck)
-            packet_list = pcaptolist(packets, start)
+            packet_list = pcaptolist(packets, start, 10)
             if len(packet_list) > 0:
                 i += 1
                 duration = durations(packet_list)
@@ -63,4 +65,4 @@ run(x, 1, PathHTTPS)
 
 
 # 24,381    Doh
-# 761,542 HTTPS -> 25000
+# 761,542 HTTPS -> 25,000

@@ -49,6 +49,7 @@ def startin(path_doh_session):
                     return index + 1
     return -1
 
+
 def endin(pck):
     return pck.__len__() - 4
 
@@ -56,8 +57,8 @@ def endin(pck):
 # this function convert the pcap file to list
 # every cell in this list will have one packet
 # i have took only the first 30 packet after the key exchange(or less) to complete my research
-def pcaptolist(pck, start):
-    end = endin(pck)
+def pcaptolist(pck, start, length=30):
+    end = min(endin(pck), start+length)
     list = []
     if start == -1:
         return list
@@ -65,6 +66,7 @@ def pcaptolist(pck, start):
         if i == end:
             break
         list.append(pck[i])
+    print(len(list))
     return list
 
 
@@ -95,7 +97,7 @@ def times(pck):
                 min = time
             average += time
 
-    average = int(average / 29)
+    average = int(average / (len(pck)))
     return [average, min, max]
 
 
@@ -160,7 +162,7 @@ def ratio_bytes(pck, src):
     outgoing_size = np.sum(list_outgoing)
     incoming_size = np.sum(list_incoming)
     if incoming_size == 0:
-        incoming_size = 1
+        return 1
     return outgoing_size/incoming_size
 
 
@@ -175,6 +177,6 @@ def ration_packets(pck, src):
         else:
             list_incoming.append(packet.__len__())
 
-    if len(list_incoming):
+    if len(list_incoming) == 0:
         return 1
     return len(list_outgoing)/len(list_incoming)
