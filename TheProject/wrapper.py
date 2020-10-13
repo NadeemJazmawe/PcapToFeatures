@@ -16,7 +16,7 @@ def createcsv(name="DataSet"):
         writer.writerow(['Label', 'Duration', 'Average Time Delay', 'Min Time Delay',
                         'Max Time Delay', 'Percentage Incoming Packets', 'Percentage Outgoing Packets',
                          'Max Packet Size', 'Outgoing Packet Variance', 'Incoming Packet Variance',
-                         'Average Outgoing Packets', 'Average Incoming packets', 'Ratio Bytes Size'])
+                         'Average Outgoing Packets', 'Average Incoming packets', 'Ratio Bytes Size', 'Ration Of Packets'])
     return filename
 
 
