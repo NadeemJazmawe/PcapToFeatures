@@ -4,7 +4,7 @@ This code for extracts features for pcap files.
 
 it has writed with <b>Pythom</b>.
 
-it run automatically and save the features in <b>csv</b> format.
+it run automatically and save the features in <b>CSV</b> format.
 
 all the features will be extracted debending the call, three way handshake will be avoiding.
 
