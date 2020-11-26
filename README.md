@@ -24,27 +24,27 @@ it run automatically and save the features in <b>csv</b> format.
 # Installation
 you should install the code (the mean code can be fond in <b>TheProject</b> folder), importing wrapper.py
 
-'''py
+```
 import wrapper
-'''
+```
 
 creating <b>CSV file</b> using <b>createcsv</b> function with name of the file(or it will give automatically name to this file - DataSet).
-'''py
+```
   createcsv("file name")
-'''
+```
 
 also you can use any <b>CSV</b> file to write over
 after that running the <b>run<b> function , you need to give it name of the CSV file you want to use and label number and path for the folder that have the PCAP files.
-'''py
+```
   run("file name", "label number", "path to folder")
-'''
+```
  
 * Example:
-'''py
+```
   x = createcsv()
   run(x, 0, PathDoH)
   run(x, 1, PathHTTPS)
-'''
+```
  
 
 
