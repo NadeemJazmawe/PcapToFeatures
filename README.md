@@ -28,7 +28,7 @@ all the features will be extracted debending the call, three way handshake will 
 you should install the code (the mean code can be found in <b>TheProject</b> folder), importing wrapper.py
 
 ```
-import wrapper
+  import wrapper
 ```
 
 creating <b>CSV file</b> using <b>createcsv</b> function with name of the file(or it will give automatically name to this file - DataSet).
@@ -44,6 +44,8 @@ after that running the <b>run</b> function , you need to give it name of the CSV
  
 * Example:
 ```
+  PathHTTPS = "/home/nadeem/Documents/recorded_traffic_test/HTTPS"
+  PathDoH = "/home/nadeem/Documents/recorded_traffic_test/DoH"
   x = createcsv()
   run(x, 0, PathDoH)
   run(x, 1, PathHTTPS)
