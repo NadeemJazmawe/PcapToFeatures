@@ -34,7 +34,7 @@ creating <b>CSV file</b> using <b>createcsv</b> function with name of the file(o
 ```
 
 also you can use any <b>CSV</b> file to write over
-after that running the <b>run<b> function , you need to give it name of the CSV file you want to use and label number and path for the folder that have the PCAP files.
+after that running the <b>run</b> function , you need to give it name of the CSV file you want to use and label number and path for the folder that have the PCAP files.
 ```
   run("file name", "label number", "path to folder")
 ```
