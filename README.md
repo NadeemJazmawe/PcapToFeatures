@@ -22,7 +22,7 @@ it run automatically and save the features in <b>csv</b> format.
 * Ration Of Packets: Ratio between number of packets sent and number of packets received.
 
 # Installation
-you should install the code (the mean code can be fond in <b>TheProject</b> folder), importing wrapper.py
+you should install the code (the mean code can be found in <b>TheProject</b> folder), importing wrapper.py
 
 ```
 import wrapper
