@@ -1,7 +1,9 @@
 # PcapToFeatures
 
-This code for extracts features for pcap files .
+This code for extracts features for pcap files.
+
 it has writed with <b>Pythom</b>.
+
 it run automatically and save the features in <b>csv</b> format.
 
 # Features you can get with:
